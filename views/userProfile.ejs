@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title></title>
+</head>
+<body class="bg-zinc-800 h-screen overflow-hidden">
+    <nav class="flex items-center justify-between px-4 w-full h-36 bg-zinc-900">
+        <div>
+            <a class="text-white px-6 py-2 border-2 border-zinc-700 bg-gray-800" href="/user/follow/<%= user._id %>">
+                <%= user.followers.indexOf(current_user._id) === -1 ? "Follow" : "Unfollow" %>
+            </a>
+        </div>
+        <div class="flex flex-col items-center gap-2 ml-8 text-white">
+            <div class="h-16 w-16">
+                <img class="object-cover rounded-full aspect-square" src="data:image/jpeg;base64, <%=user.pic.toString('base64') %>" alt="" srcset="">
+            </div>
+            <h1><%= user.name %></h1>
+            <h1>Current Followers : <%= user.followers.length %></h1>
+        </div>
+<div>
+    <a class="text-white px-6 py-2 border-2 border-zinc-700 bg-gray-800" href="/logout">logout</a>
+    <a class="text-white px-6 py-2 border-2 border-zinc-700 bg-gray-800" href="/dashboard">Home</a>
+</div>
+    </nav>
+       <div class="flex justify-around px-2 w-full bg-zinc-800 h-5/6 overflow-y-hidden">
+
+        <div class="w-4 h-100 border-r-2 border-zinc-950 mr-2"></div>
+    <div class="flex flex-col gap-4 h-[84%] items-center overflow-y-scroll text-white w-96 mt-4">
+        <% if(user.posts.length > 0) { %>
+            <% user.posts.forEach(function(post){ %>
+                <div class="flex flex-col py-2 bg-zinc-900 border-2 relative border-zinc-950 w-80">
+                    <div class="flex justify-between gap-2 items-center">
+                        <div class="flex gap-2 items-center px-2 py-2">
+                            <div class="h-5 w-5">
+                                <img class="object-cover rounded-full aspect-square" src="data:image/jpeg;base64, <%= user.pic.toString('base64') %>" alt="" srcset="">
+                            </div>
+                            <h1 class="text-sm">@<%= user.username%></h1>
+                        </div>
+                        <h1 class="pr-2 text-sm font-extralight"><%=post.createdAt.toLocaleString('en-US') %></h1>
+                    </div>
+                    <h1 class="px-2 text-2xl mb-2"><%= post.caption %></h1>
+                    <img class="object-cover h-52 mb-2 aspect-square" src="data:image/jpeg;base64, <%=post.pic.toString('base64') %>" alt="" srcset="">
+                  <div class="mt-2 px-2 flex gap-2 items-center justify-center">
+                    <% if (user._id.toString()=== current_user._id.toString()) { %>
+                        <div class="flex gap-2">
+                            <a class="text-white text-sm" href="/user/post/edit/<%= post._id %>">Edit</a>
+                        <a class="text-red-600 text-sm" href="/user/post/delete/<%= post._id %>">Delete</a>
+                        </div>
+                        <% } %>
+                        <div class="flex gap-2 text-sm">
+                            <a href="/user/post/<%= post._id %>/like">
+                                <%= post.like.indexOf(user._id) === -1 ? "Like" : "Unlike" %>
+                            </a>
+                            <h1>( <%= post.like.length %> )</h1>
+                        </div>
+                  </div>
+                    <p class="mx-4 mt-2 pt-2 border-t-2 border-t-zinc-950 tracking-tight mb-2"><%= post.content %></p>
+                    <form class="px-2 flex gap-2" action="/user/post/<%= post._id %>/comment" method="post">
+                        <input class="text-sm rounded-md bg-red-600 px-2 py-2" type="submit" value="Comment">
+                        <input placeholder="Enter comment here" class="w-52 rounded-mg p-2 bg-transparent border-2 border-zinc-950" type="text" name="comment" id="">
+                    </form>
+                    <div class="flex flex-col gap-3 h-20 p-2 mx-2 rounded-md overflow-y-scroll bg-transparent border-2 border-zinc-950 mt-3">
+                        <% post.comments.forEach(function(comment){ %>
+                            <div class="flex gap-3 bg-zinc-800 rounded-full p-1">
+                                <h5>@<%= comment.user.name %></h5>
+                                <div class="flex flex-col items-end">
+                                    <h6><%= comment.comment %></h6>
+                                    <% if (comment.user._id.toString() === current_user._id.toString()) { %>
+                                        <a class="text-sm text-red-600" href="/user/post/comment/delete/<%= comment._id %>">Delete</a>
+                                    <% } %>
+                                </div>
+                            </div>
+                       <% }) %>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+<h1>no posts</h1>
+        <% } %>
+    </div> 
+    <div class="w-4 h-100 border-r-2 border-zinc-950 mr-2"></div>
+    </div>
+</body>
+</html>

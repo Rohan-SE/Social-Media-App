@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+<body class="bg-zinc-800 h-screen overflow-hidden">
+    <nav class="flex items-center justify-between px-4 w-full h-24 bg-zinc-900">
+     <div class="flex items-center gap-3 text-white">
+         <div class="h-16 w-16">
+             <img class="object-cover rounded-full aspect-square" src="data:image/jpeg;base64, <%=user.pic.toString('base64') %>" alt="" srcset="">
+         </div>
+         <a href="/myprofile">
+            <%= user.name %>
+         </a>
+
+     </div>
+     <form class="relative mr-20" action="/profiles/search" method="get">
+         <input class="bg-transparent outline-none p-2 border-2 border-zinc-700 text-white" type="text" name="search" value="" id="search" placeholder="Search User">
+         <input class="cursor-pointer bg-transparent p-2 border-2 border-l-0 border-zinc-700 text-white absolute" type="submit" value="Search">
+     </form>
+     <div>
+        <a class="text-white px-6 py-2 border-2 border-zinc-700 bg-gray-800" href="/logout">logout</a>
+        <a class="text-white px-6 py-2 border-2 border-zinc-700 bg-gray-800" href="/dashboard">Home</a>
+     </div>
+    </nav>
+    <div class="flex justify-around px-2 w-full bg-zinc-800 h-5/6 overflow-y-hidden">
+        <div class="w-2/3 h-96 bg-zinc-900 border-2 border-zinc-950 mt-5 flex gap-10">
+            <div class="h-full bg-red-500 w-52 border-r-2 border-r-zinc-950">
+                <img class="min-h-full" src="data:image/jpeg;base64, <%=user.pic.toString('base64') %>" alt="" srcset="">
+            </div>
+           <div class="mt-8 text-white flex flex-col gap-2 items-center justify-center">
+            <h1 class="text-3xl font-semibold mb-4"><%= user.name %> Profile</h1>
+            <input class="outline-none rounded-md bg-zinc-900 p-2 border-2 border-zinc-950 mb-2 w-80" type="text" value="<%= user.name %>" name="name" id="" disabled>
+            <input class="outline-none rounded-md bg-zinc-900 p-2 border-2 border-zinc-950 mb-2 w-80" type="text" value="<%= user.email %>" name="email" disabled>
+            <input class="outline-none rounded-md bg-zinc-900 p-2 border-2 border-zinc-950 mb-2 w-80" type="password" name="password" id="" value="password" disabled>
+            <input class="outline-none rounded-md bg-zinc-900 p-2 border-2 border-zinc-950 mb-2 w-80" type="text" name="email" disabled>
+            <a class="text-white px-6 py-2 border-2 border-zinc-900 bg-zinc-950" href="/myprofile/edit">
+                Update Information
+            </a>
+        </div>
+        </div>
+    </div>
+</body>
+</html>

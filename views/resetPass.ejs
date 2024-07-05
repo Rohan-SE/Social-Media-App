@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+<body class="bg-zinc-800 h-screen overflow-hidden">
+    <% if(error.length>0) { %>
+        <div class="absolute text-white bg-red-700 p-4 left-1/3 text-2xl w-96 text-center">
+            <%= error %>
+        </div>
+    <% } %>
+    <div class="flex items-center justify-around px-2 w-full bg-zinc-800 h-full overflow-y-hidden">
+        <div class="w-[38%] h-[92%] bg-zinc-900 border-2 gap-8 border-zinc-950 mt-5 flex flex-col items-center justify-center">
+            <h1 class="text-4xl text-white">OTP</h1>
+            <form class="flex flex-col justify-center items-center gap-2 text-white" action="/reset/password/otp" method="post">
+                <input class="outline-none rounded-md bg-zinc-900 p-2 border-2 border-zinc-950 mb-2 w-80" type="text" name="otp" id="" placeholder="Enter OTP">
+                <input class="cursor-pointer bg-zinc-950 border-2 border-zinc-900 rounded-md py-2 w-44 mt-2" type="submit" value="Submit">
+            </form>
+        </div>
+        </div>
+  
+</body>
+</html>
